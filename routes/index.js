@@ -4,7 +4,7 @@ const router = express.Router();
 
 /* GET home page. */
 router.get("/", function (req, res, next) {
-  res.send("cronsteamuser hello world!");
+  res.send("storebooster hello world!");
 });
 
 export default router;
