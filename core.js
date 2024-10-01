@@ -32,15 +32,15 @@ export async function initStoreBooster() {
   });
 
   for await (const account of accounts) {
-    const result = await SteamClient.isAccountPlayable({
+    const client = new SteamClient({
       cookie: account.cookie,
-      isInvisible: false,
-      isFakeGameScore: false,
-      isPartyRegister: false,
-      keepLoginWhenPlayable: true,
     });
-    if (result?.playable) {
+    const playable = await client.playCSGO();
+    client.offAllEvent();
+    if (playable) {
       break;
+    } else {
+      await client.logOff();
     }
   }
 }
