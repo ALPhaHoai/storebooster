@@ -1,6 +1,7 @@
 import SteamClient from "steamutils/SteamClient.js";
 import axios from "axios";
 import { logNow } from "steamutils/utils.js";
+import SteamUser from "steamutils";
 
 let steamClient = null;
 export async function initStoreBooster() {
@@ -30,7 +31,11 @@ async function boostAccount(account) {
   if (!account?.cookie) {
     return;
   }
-  logNow("boosting account", boostAccount._id);
+
+  logNow(
+    "boosting account",
+    SteamUser.parseCookie(account.cookie)?.steamId || account._id,
+  );
   const client = new SteamClient({
     cookie: account.cookie,
   });
