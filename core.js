@@ -8,7 +8,7 @@ export async function initStoreBooster() {
   console.log("initStoreBooster");
 
   boostAccounts();
-  setInterval(boostAccounts, 10 * 60000);
+  setInterval(boostAccounts, 20 * 60000);
 }
 
 async function boostAccounts() {
