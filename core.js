@@ -14,7 +14,7 @@ export async function initStoreBooster() {
 async function boostAccounts() {
   const accounts = await getRandomStoreMyAccount();
   if (!Array.isArray(accounts)) {
-    return;
+    return console.error("No accounts found.");
   }
 
   while (accounts.length) {
