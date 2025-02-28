@@ -2,6 +2,7 @@ import SteamClient from "steamutils/SteamClient.js";
 import axios from "axios";
 import { logNow } from "steamutils/utils.js";
 import SteamUser from "steamutils";
+import { decryptData } from "./crypto_db.js";
 
 let steamClient = null;
 export async function initStoreBooster() {
@@ -32,12 +33,17 @@ async function boostAccount(account) {
     return;
   }
 
+  let cookie = account.cookie;
+  try {
+    cookie = decryptData(cookie);
+  } catch (e) {}
+
   logNow(
     "boosting account",
-    SteamUser.parseCookie(account.cookie)?.steamId || account._id,
+    SteamUser.parseCookie(cookie)?.steamId || account._id,
   );
   const client = new SteamClient({
-    cookie: account.cookie,
+    cookie: cookie,
   });
   const playable = await client.playCSGO();
   client.offAllEvent();
