@@ -4,6 +4,13 @@ import { logNow } from "steamutils/utils.js";
 import SteamUser from "steamutils";
 import { decryptData } from "./crypto_db.js";
 
+const api = axios.create({
+  baseURL: process.env.API_ENDPOINT,
+  headers: {
+    [process.env.API_AUTH_HEADER_NAME]: process.env.API_AUTH_HEADER_VALUE
+  }
+});
+
 let steamClient = null;
 export async function initStoreBooster() {
   console.log("initStoreBooster");
@@ -57,8 +64,8 @@ async function boostAccount(account) {
 async function getRandomStoreMyAccount() {
   try {
     return (
-      await axios.get(
-        `${process.env.API_ENDPOINT}/getRandomStoreMyAccount?limit=20`,
+      await api.get(
+        `/getRandomStoreMyAccount?limit=20`,
       )
     )?.data?.result;
   } catch (e) {}
